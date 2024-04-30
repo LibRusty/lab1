@@ -7,6 +7,7 @@ class ILog
 {
 public:
     virtual void Logging(QString);
+    virtual void MessageBuilder();
 };
 
 #endif // ILOG_H
