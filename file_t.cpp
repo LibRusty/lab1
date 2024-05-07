@@ -1,6 +1,6 @@
 #include "file_t.h"
 
-FileT::FileT(const QString &path)
+FileT::FileT(QObject *parent, const QString &path): QObject(parent)
 {
     this->Path = path;
     QFileInfo f(path);

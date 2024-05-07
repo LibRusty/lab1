@@ -4,24 +4,25 @@
 #include <vector>
 #include "file_t.h"
 #include "ConsoleLog.h"
-#include <QTimer>
+#include "fileevent.h"
+#include <QDateTime>
+
 
 class FileManager: public QObject
 {
     Q_OBJECT
 public:
-    static FileManager& Single(std::vector<FileT*>);
+    static FileManager& Single(QObject* parent = nullptr, std::vector<FileT*>, std::vector<ILog*>);
 
 private:
-    FileManager(std::vector<FileT*>);
+    FileManager(QObject* parent = nullptr, std::vector<FileT*>, std::vector<ILog*>);
     ~FileManager(){}
 
-
-protected:
     std::vector<FileT*> files;
     std::vector<ILog*> logs;
-    QTimer* timer;
 
+public slots:
+    void check();
 };
 
 #endif // FILEMANAGER_H

@@ -2,12 +2,16 @@
 #define ILOG_H
 
 #include <QString>
+#include <QObject>
+#include "fileevent.h"
 
-class ILog
+class ILog: public QObject
 {
 public:
-    virtual void Logging(QString);
-    virtual void MessageBuilder();
+    ILog(QObject* parent = nullptr): QObject(parent){}
+
+    virtual void Logging(QString&) = 0;
+    virtual void MessageBuilder(FileEvent*) = 0;
 };
 
 #endif // ILOG_H

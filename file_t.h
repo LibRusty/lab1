@@ -12,7 +12,7 @@ protected:
     long long Size;
     bool Exist;
 public:
-    explicit FileT(const QString&); // для предотвращения неявных преобразований
+    explicit FileT(QObject* parent, const QString&); // для предотвращения неявных преобразований
     int GetSize();
     bool GetExist();
     QString GetPath();

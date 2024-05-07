@@ -7,7 +7,9 @@ CONFIG += c++17 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        ConcsoleLog.cpp \
         file_t.cpp \
+        fileevent.cpp \
         filemanager.cpp \
         main.cpp
 
@@ -20,4 +22,5 @@ HEADERS += \
     ConsoleLog.h \
     ILog.h \
     file_t.h \
+    fileevent.h \
     filemanager.h
