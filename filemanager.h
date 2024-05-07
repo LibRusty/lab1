@@ -12,10 +12,10 @@ class FileManager: public QObject
 {
     Q_OBJECT
 public:
-    static FileManager& Single(QObject* parent = nullptr, std::vector<FileT*>, std::vector<ILog*>);
+    static FileManager& Single(std::vector<FileT*>, std::vector<ILog*>);
 
 private:
-    FileManager(QObject* parent = nullptr, std::vector<FileT*>, std::vector<ILog*>);
+    FileManager(std::vector<FileT*>, std::vector<ILog*>);
     ~FileManager(){}
 
     std::vector<FileT*> files;

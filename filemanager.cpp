@@ -1,12 +1,12 @@
 #include "filemanager.h"
 
-FileManager& FileManager::Single(QObject* parent = nullptr, std::vector<FileT*> file, std::vector<ILog*> log)
+FileManager& FileManager::Single(std::vector<FileT*> file, std::vector<ILog*> log)
 {
-    static FileManager manager(parent, file, log);
+    static FileManager manager(file, log);
     return manager;
 }
 
-FileManager::FileManager(QObject* parent = nullptr, std::vector<FileT*> file, std::vector<ILog*> log): QObject(parent)
+FileManager::FileManager(std::vector<FileT*> file, std::vector<ILog*> log)
 {
     files = file;
     logs = log;
