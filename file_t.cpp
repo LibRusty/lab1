@@ -2,7 +2,7 @@
 
 FileT::FileT(const QString &path)
 {
-    Path = path;
+    this->Path = path;
     QFileInfo f(path);
     Size = static_cast<long long>(f.size()); // size() возвращает qint_64
     Exist = f.exists();
@@ -18,12 +18,13 @@ bool FileT::GetExist()
     return Exist;
 }
 
-void FileT::SetSize()
+QString FileT::GetPath()
 {
-    Size = this->size();
+    return Path;
 }
 
-void FileT::SetExist()
+void FileT::Update()
 {
+    Size = static_cast<long long>(this->size());
     Exist = this->exists();
 }

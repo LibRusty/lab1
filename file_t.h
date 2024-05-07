@@ -8,16 +8,15 @@ class FileT: public QObject, QFileInfo
 {
     Q_OBJECT
 protected:
-    const QString Path;
+    QString Path;
     long long Size;
     bool Exist;
 public:
     explicit FileT(const QString&); // для предотвращения неявных преобразований
     int GetSize();
     bool GetExist();
+    QString GetPath();
 
-    void SetSize();
-    void SetExist();
-
+    void Update();
 };
 #endif // FILE_T_H
