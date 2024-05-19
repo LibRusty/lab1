@@ -23,8 +23,14 @@ QString FileT::GetPath()
     return Path;
 }
 
+bool FileT::Turned()
+{
+    return turn;
+}
+
 void FileT::Update()
 {
-    Size = static_cast<long long>(this->size());
+    Size = this->size();
     Exist = this->exists();
+    turn = false;
 }

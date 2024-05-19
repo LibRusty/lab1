@@ -10,7 +10,10 @@ void ConsoleLog::MessageBuilder(FileEvent* event)
     QString str;
     if (included.find(event->GetState()) != included.end())
     {
-        str = 'File ' + event->GetPath() + ' with size ' + event->GetSize() + event->GetState();
+        if (event->GetState() != deleted || event->GetState() != not_exists)
+            str = 'File along path ' + event->GetPath() + ' with size ' + event->GetSize() + event->GetState();
+        else
+            str = 'File along path ' + event->GetPath() + event->GetState();
         Logging(str);
     }
 }

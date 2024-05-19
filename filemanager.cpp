@@ -1,45 +1,68 @@
 #include "filemanager.h"
 
-FileManager& FileManager::Single(std::vector<FileT*> file, std::vector<ILog*> log)
+FileManager& FileManager::Single(std::vector<FileT*> file = nullfile, ILog* log = nullptr)
 {
     static FileManager manager(file, log);
     return manager;
 }
 
-FileManager::FileManager(std::vector<FileT*> file, std::vector<ILog*> log)
+FileManager::FileManager(std::vector<FileT*> File, ILog* Log)
 {
-    files = file;
-    logs = log;
+    files = File;
+    log = Log;
+    check();
 }
 
 void FileManager::check()
 {
     std::vector<FileEvent*> events;
-    QDateTime now = QDateTime::currentDateTime();
     for (auto file: files)
     {
-        if (file->exists()) // файл существует
+        if (file->Turned())
         {
-            if (now - file->lastModified() < 100) //ВРЕМЕННАЯ МЕРА!!!
+            if (file->exists())
             {
-                FileEvent* t = new FileEvent(file->GetPath(), changed, file->size());
+                FileEvent* t = new FileEvent(file->GetPath(), exists, file->size());
                 events.push_back(t);
-                file->Update();
+            }
+            else
+            {
+                FileEvent* t = new FileEvent(file->GetPath(), not_exists, 0);
+                events.push_back(t);
             }
         }
-        else // файл не существует
+        else
         {
-            FileEvent* t = new FileEvent(file->GetPath(), not_exists, file->size());
-            events.push_back(t);
-            file->Update();
+            if (file->exists()) // файл существует
+            {
+                if (file->GetSize() != file->size())
+                {
+                    FileEvent* t = new FileEvent(file->GetPath(), changed, file->size());
+                    events.push_back(t);
+                }
+            }
+            else // файл удален
+            {
+                FileEvent* t = new FileEvent(file->GetPath(), deleted, 0);
+                events.push_back(t);
+            }
         }
+        file->Update();
     }
-    for (auto logger: logs)
+    if (log)
     {
         for (auto event: events)
         {
-            logger->MessageBuilder(event);
+            log->MessageBuilder(event);
         }
     }
 }
 
+FileManager::~FileManager()
+{
+    delete log;
+    for (auto file: files)
+    {
+        delete file;
+    }
+}

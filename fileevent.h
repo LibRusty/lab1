@@ -7,7 +7,8 @@ enum State
 {
     exists,
     changed,
-    not_exists
+    not_exists,
+    deleted
 };
 
 class FileEvent
