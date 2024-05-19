@@ -12,44 +12,51 @@ FileManager::FileManager(std::vector<FileT*> File, ILog* Log)
 {
     files = File;
     log = Log;
-    check();
 }
 
 void FileManager::check()
 {
     std::vector<FileEvent*> events;
-    for (auto file: files)
+    for (int i = 0; i < files.size(); i++)
     {
-        if (file->Turned())
+        if (files[i]->Turned())
         {
-            if (file->exists())
+            if (files[i]->exists())
             {
-                FileEvent* t = new FileEvent(file->GetPath(), FileEvent::exists, file->size());
+                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::exists, files[i]->size());
                 events.push_back(t);
+                files[i]->Update();
             }
             else
             {
-                FileEvent* t = new FileEvent(file->GetPath(), FileEvent::not_exists, 0);
+                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::not_exists, 0);
                 events.push_back(t);
+                files[i]->Update();
+                files.erase(files.begin()+ i);
+                i--;
             }
         }
         else
         {
-            if (file->exists()) // файл существует
+            if (files[i]->exists()) // файл существует
             {
-                if (file->GetSize() != file->size())
+                if (files[i]->GetSize() != files[i]->size())
                 {
-                    FileEvent* t = new FileEvent(file->GetPath(), FileEvent::changed, file->size());
+                    FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::changed, files[i]->size());
                     events.push_back(t);
+                    files[i]->Update();
                 }
             }
             else // файл удален
             {
-                FileEvent* t = new FileEvent(file->GetPath(), FileEvent::deleted, 0);
+                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::deleted, 0);
                 events.push_back(t);
+                files[i]->Update();
+                files.erase(files.begin()+ i);
+                i--;
             }
         }
-        file->Update();
+
     }
     if (log)
     {

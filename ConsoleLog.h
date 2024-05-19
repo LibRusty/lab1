@@ -11,6 +11,7 @@ class ConsoleLog: public ILog
     std::set<FileEvent::State> included;
 public:
     ConsoleLog(QObject* parent, std::set<FileEvent::State>);
+    ConsoleLog(QObject* parent);
     virtual void MessageBuilder(FileEvent*) override;
     virtual void Logging(QString&) override;
 };

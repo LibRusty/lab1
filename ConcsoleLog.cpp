@@ -6,7 +6,10 @@ ConsoleLog::ConsoleLog(QObject *parent = nullptr, std::set<FileEvent::State> inc
 {
     included = incl;
 }
-
+ConsoleLog::ConsoleLog(QObject *parent = nullptr): ILog(parent)
+{
+    included = full;
+}
 void ConsoleLog::MessageBuilder(FileEvent* event)
 {
     QString str;
@@ -15,10 +18,10 @@ void ConsoleLog::MessageBuilder(FileEvent* event)
         switch(event->GetState())
         {
         case FileEvent::deleted:
-            str = "File along path " + event->GetPath() + "deleted";
+            str = "File along path " + event->GetPath() + " deleted";
             break;
         case FileEvent::not_exists:
-            str = "File along path " + event->GetPath() + "exists";
+            str = "File along path " + event->GetPath() + " exists";
             break;
         case FileEvent::exists:
             str = "File along path " + event->GetPath() + " with size " + QString::number(event->GetSize()) + "exists";
