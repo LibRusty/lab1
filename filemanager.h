@@ -4,10 +4,6 @@
 #include <vector>
 #include "file_t.h"
 #include "ConsoleLog.h"
-#include "fileevent.h"
-#include <QDateTime>
-
-std::vector<FileT*> nullfile{nullptr};
 
 class FileManager: public QObject
 {

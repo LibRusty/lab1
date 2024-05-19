@@ -4,7 +4,7 @@ FileT::FileT(QObject *parent, const QString &path): QObject(parent)
 {
     this->Path = path;
     QFileInfo f(path);
-    Size = static_cast<long long>(f.size()); // size() возвращает qint_64
+    Size = f.size(); // size() возвращает qint_64
     Exist = f.exists();
 }
 

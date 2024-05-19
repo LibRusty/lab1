@@ -7,7 +7,7 @@ FileEvent::FileEvent(const QString& p, State stat, int s)
     size = s;
 }
 
-State FileEvent::GetState()
+FileEvent::State FileEvent::GetState()
 {
     return state;
 }

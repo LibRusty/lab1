@@ -1,5 +1,7 @@
 #include "filemanager.h"
 
+std::vector<FileT*> nullfile{nullptr};
+
 FileManager& FileManager::Single(std::vector<FileT*> file = nullfile, ILog* log = nullptr)
 {
     static FileManager manager(file, log);
@@ -22,12 +24,12 @@ void FileManager::check()
         {
             if (file->exists())
             {
-                FileEvent* t = new FileEvent(file->GetPath(), exists, file->size());
+                FileEvent* t = new FileEvent(file->GetPath(), FileEvent::exists, file->size());
                 events.push_back(t);
             }
             else
             {
-                FileEvent* t = new FileEvent(file->GetPath(), not_exists, 0);
+                FileEvent* t = new FileEvent(file->GetPath(), FileEvent::not_exists, 0);
                 events.push_back(t);
             }
         }
@@ -37,13 +39,13 @@ void FileManager::check()
             {
                 if (file->GetSize() != file->size())
                 {
-                    FileEvent* t = new FileEvent(file->GetPath(), changed, file->size());
+                    FileEvent* t = new FileEvent(file->GetPath(), FileEvent::changed, file->size());
                     events.push_back(t);
                 }
             }
             else // файл удален
             {
-                FileEvent* t = new FileEvent(file->GetPath(), deleted, 0);
+                FileEvent* t = new FileEvent(file->GetPath(), FileEvent::deleted, 0);
                 events.push_back(t);
             }
         }

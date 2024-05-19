@@ -2,7 +2,7 @@
 #define FILE_T_H
 #include <QFileInfo>
 #include <QFile>
-#include <QString>
+
 
 class FileT: public QObject, public QFileInfo
 {
