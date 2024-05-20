@@ -30,7 +30,8 @@ bool FileT::Turned()
 
 void FileT::Update()
 {
-    Size = this->size();
-    Exist = this->exists();
+    QFileInfo f(Path);
+    Size = f.size();
+    Exist = f.exists();
     turn = false;
 }

@@ -21,13 +21,13 @@ void ConsoleLog::MessageBuilder(FileEvent* event)
             str = "File along path " + event->GetPath() + " deleted";
             break;
         case FileEvent::not_exists:
-            str = "File along path " + event->GetPath() + " exists";
+            str = "File along path " + event->GetPath() + " not exists";
             break;
         case FileEvent::exists:
-            str = "File along path " + event->GetPath() + " with size " + QString::number(event->GetSize()) + "exists";
+            str = "File along path " + event->GetPath() + " with size " + QString::number(event->GetSize()) + "B exists";
             break;
         case FileEvent::changed:
-            str = "File along path " + event->GetPath() + " with size " + QString::number(event->GetSize()) + "changed";
+            str = "File along path " + event->GetPath() + " with size " + QString::number(event->GetSize()) + "B changed";
             break;
         }
         Logging(str);

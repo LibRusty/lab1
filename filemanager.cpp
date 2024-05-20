@@ -19,11 +19,11 @@ void FileManager::check()
     std::vector<FileEvent*> events;
     for (int i = 0; i < files.size(); i++)
     {
-        if (files[i]->Turned())
+        if (files[i]->Turned()) // первый запуск
         {
-            if (files[i]->exists())
+            if (files[i]->exists(files[i]->GetPath()))
             {
-                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::exists, files[i]->size());
+                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::exists, files[i]->GetSize());
                 events.push_back(t);
                 files[i]->Update();
             }
@@ -38,11 +38,12 @@ void FileManager::check()
         }
         else
         {
-            if (files[i]->exists()) // файл существует
+            if (files[i]->exists(files[i]->GetPath())) // файл существует, но изменен
             {
-                if (files[i]->GetSize() != files[i]->size())
+                QFileInfo f(files[i]->GetPath());
+                if (files[i]->GetSize() != f.size())
                 {
-                    FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::changed, files[i]->size());
+                    FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::changed, f.size());
                     events.push_back(t);
                     files[i]->Update();
                 }
