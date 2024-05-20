@@ -10,7 +10,13 @@ FileManager& FileManager::Single(std::vector<FileT*> file = nullfile, ILog* log 
 
 FileManager::FileManager(std::vector<FileT*> File, ILog* Log)
 {
-    files = File;
+    std::set<QString> paths;
+    for (int i = 0; i < File.size(); i++)
+        if (paths.find(File[i]->GetPath()) == paths.end())
+        {
+            files.push_back(File[i]);
+            paths.insert(File[i]->GetPath());
+        }
     log = Log;
 }
 
