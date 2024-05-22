@@ -25,11 +25,11 @@ void FileManager::check()
     std::vector<FileEvent*> events;
     for (int i = 0; i < files.size(); i++)
     {
-        if (files[i]->Turned()) // первый запуск
+        if (files[i]->GetExist() != files[i]->exists(files[i]->GetPath())) // exist разный
         {
             if (files[i]->exists(files[i]->GetPath()))
             {
-                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::exists, files[i]->GetSize());
+                FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::exists, f.size());
                 events.push_back(t);
                 files[i]->Update();
             }
@@ -38,8 +38,6 @@ void FileManager::check()
                 FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::not_exists, 0);
                 events.push_back(t);
                 files[i]->Update();
-                files.erase(files.begin()+ i);
-                i--;
             }
         }
         else
@@ -54,13 +52,11 @@ void FileManager::check()
                     files[i]->Update();
                 }
             }
-            else // файл удален
+            else if (files[i]->exists(files[i]->GetPath()) != files[i]->GetExist()) // файл удален
             {
                 FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::deleted, 0);
                 events.push_back(t);
                 files[i]->Update();
-                files.erase(files.begin()+ i);
-                i--;
             }
         }
 

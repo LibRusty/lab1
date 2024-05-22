@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QTimer* timer = new QTimer(&FileManager::Single(files, log));
 
     FileManager::connect(timer, &QTimer::timeout, &FileManager::Single(files, log), &FileManager::check);
-    timer->start(100);
+    timer->start(3000);
 
     return a.exec();
 }

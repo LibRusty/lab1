@@ -5,7 +5,7 @@ FileT::FileT(QObject *parent, const QString &path): QObject(parent)
     this->Path = path;
     QFileInfo f(path);
     Size = f.size();
-    Exist = f.exists();
+    Exist = false;
 }
 
 int FileT::GetSize()
@@ -23,15 +23,9 @@ QString FileT::GetPath()
     return Path;
 }
 
-bool FileT::Turned()
-{
-    return turn;
-}
-
 void FileT::Update()
 {
     QFileInfo f(Path);
     Size = f.size();
     Exist = f.exists();
-    turn = false;
 }
