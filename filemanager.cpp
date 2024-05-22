@@ -29,6 +29,7 @@ void FileManager::check()
         {
             if (files[i]->exists(files[i]->GetPath()))
             {
+                QFileInfo f(files[i]->GetPath());
                 FileEvent* t = new FileEvent(files[i]->GetPath(), FileEvent::exists, f.size());
                 events.push_back(t);
                 files[i]->Update();
